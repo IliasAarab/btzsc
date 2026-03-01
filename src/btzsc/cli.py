@@ -14,7 +14,7 @@ def main() -> None:
 
 @main.command()
 @click.option("--model", "model_name", required=True, help="HF model name or path")
-@click.option("--type", "model_type", type=click.Choice(["embedding", "nli", "reranker", "llm"]), default=None)
+@click.option("--type", "model_type", type=click.Choice(["embedding", "nli", "reranker", "llm"]), required=True)
 @click.option("--batch-size", type=int, default=32)
 @click.option("--tasks", default="", help="Comma-separated task groups or dataset names")
 @click.option("--max-samples", type=int, default=None)
@@ -31,7 +31,7 @@ def evaluate(
 
     Args:
         model_name: HuggingFace model name or local model path.
-        model_type: Optional explicit model adapter type.
+        model_type: Explicit model adapter type.
         batch_size: Inference batch size.
         tasks: Comma-separated task-group or dataset names.
         max_samples: Optional per-dataset sample limit.

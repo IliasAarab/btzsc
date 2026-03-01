@@ -104,22 +104,26 @@ class BTZSCBenchmark:
         self.tasks = tasks
         self.cache_dir = cache_dir
 
-    def _resolve_model(self, model: str | BaseModel, model_type: str | None = None) -> BaseModel:
+    @staticmethod
+    def _resolve_model(model: str | BaseModel, model_type: str | None = None) -> BaseModel:
         """Instantiate or validate a model adapter.
 
         Args:
             model: Model name string or pre-built adapter instance.
-            model_type: Optional explicit adapter type.
+            model_type: Explicit adapter type when `model` is a string.
 
         Returns:
             A concrete `BaseModel` implementation.
 
         Raises:
-            ValueError: If `model_type` is unsupported.
+            ValueError: If `model_type` is missing for a model name string or unsupported.
         """
         if isinstance(model, BaseModel):
             return model
-        resolved = (model_type or self._auto_detect_model_type(model)).lower()
+        if model_type is None:
+            msg = "model_type is required when model is a string. Choose from: embedding, nli, reranker, llm"
+            raise ValueError(msg)
+        resolved = model_type.lower()
         if resolved == "embedding":
             from btzsc.models.embedding import EmbeddingModel
 
@@ -139,25 +143,6 @@ class BTZSCBenchmark:
         msg = f"Unsupported model_type: {model_type!r}"
         raise ValueError(msg)
 
-    @staticmethod
-    def _auto_detect_model_type(model_name: str) -> str:
-        """Infer adapter type from a model name.
-
-        Args:
-            model_name: Model identifier to inspect.
-
-        Returns:
-            One of `"embedding"`, `"nli"`, `"reranker"`, or `"llm"`.
-        """
-        low = model_name.lower()
-        if "reranker" in low or "ms-marco" in low:
-            return "reranker"
-        if "mnli" in low or "nli" in low:
-            return "nli"
-        if any(k in low for k in ["e5", "bge", "gte", "embedding", "minilm"]):
-            return "embedding"
-        return "llm"
-
     def evaluate(
         self,
         model: str | BaseModel,
@@ -171,7 +156,7 @@ class BTZSCBenchmark:
 
         Args:
             model: Model name string or pre-built adapter instance.
-            model_type: Optional explicit adapter type.
+            model_type: Explicit adapter type when `model` is a string.
             batch_size: Inference batch size used by adapters.
             max_samples: Optional per-dataset sample cap.
             show_progress: Whether to render a progress bar.
