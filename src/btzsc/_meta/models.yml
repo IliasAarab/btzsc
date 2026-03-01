@@ -1,0 +1,87 @@
+model_to_type:
+  bert-large-uncased: base_encoder
+  deberta-v3-large: base_encoder
+  ModernBERT-large: base_encoder
+
+  bart-large-mnli: nli_cross_encoder
+  nli-roberta-base: nli_cross_encoder
+  bert-base-uncased-nli: nli_cross_encoder
+  bert-large-uncased-nli: nli_cross_encoder
+  bert-large-uncased-nli-triplet: nli_cross_encoder
+  deberta-v3-base-nli: nli_cross_encoder
+  deberta-v3-large-nli: nli_cross_encoder
+  deberta-v3-large-nli-triplet: nli_cross_encoder
+  modernbert-base-nli: nli_cross_encoder
+  modernbert-large-nli: nli_cross_encoder
+  modernbert-large-nli-triplet: nli_cross_encoder
+
+  ms-marco-MiniLM-L6-v2: reranker
+  gte-reranker-modernbert-base: reranker
+  bge-reranker-base: reranker
+  bge-reranker-large: reranker
+  Qwen3-Reranker-0.6B: reranker
+  Qwen3-Reranker-8B: reranker
+
+  all-MiniLM-L6-v2: embedding_model
+  e5-base-v2: embedding_model
+  e5-large-v2: embedding_model
+  e5-mistral-7b-instruct: embedding_model
+  bge-base-en-v1.5: embedding_model
+  bge-large-en-v1.5: embedding_model
+  gte-base-en-v1.5: embedding_model
+  gte-large-en-v1.5: embedding_model
+  gte-modernbert-base: embedding_model
+  Qwen3-Embedding-0.6B: embedding_model
+  Qwen3-Embedding-8B: embedding_model
+
+  gemma-3-270m-it: llm
+  gemma-3-1b-it: llm
+  Llama-3.2-3B-Instruct: llm
+  Qwen3-4B: llm
+  Phi-4-mini-instruct: llm
+  Qwen3-8B: llm
+  Mistral-Nemo-Instruct-2407: llm
+
+model_to_params:
+  bert-large-uncased: 335000000
+  deberta-v3-large: 434000000
+  ModernBERT-large: 395000000
+
+  bart-large-mnli: 407000000
+  nli-roberta-base: 125000000
+  bert-base-uncased-nli: 110000000
+  bert-large-uncased-nli: 335000000
+  bert-large-uncased-nli-triplet: 335000000
+  deberta-v3-base-nli: 184000000
+  deberta-v3-large-nli: 434000000
+  deberta-v3-large-nli-triplet: 434000000
+  modernbert-base-nli: 149000000
+  modernbert-large-nli: 395000000
+  modernbert-large-nli-triplet: 395000000
+
+  ms-marco-MiniLM-L6-v2: 22700000
+  gte-reranker-modernbert-base: 149000000
+  bge-reranker-base: 278000000
+  bge-reranker-large: 560000000
+  Qwen3-Reranker-0.6B: 600000000
+  Qwen3-Reranker-8B: 8000000000
+
+  all-MiniLM-L6-v2: 22700000
+  e5-base-v2: 110000000
+  e5-large-v2: 335000000
+  e5-mistral-7b-instruct: 7000000000
+  bge-base-en-v1.5: 137000000
+  bge-large-en-v1.5: 434000000
+  gte-base-en-v1.5: 137000000
+  gte-large-en-v1.5: 434000000
+  gte-modernbert-base: 149000000
+  Qwen3-Embedding-0.6B: 600000000
+  Qwen3-Embedding-8B: 8000000000
+
+  gemma-3-270m-it: 270000000
+  gemma-3-1b-it: 1000000000
+  Llama-3.2-3B-Instruct: 3210000000
+  Qwen3-4B: 4000000000
+  Phi-4-mini-instruct: 3800000000
+  Qwen3-8B: 8200000000
+  Mistral-Nemo-Instruct-2407: 12200000000

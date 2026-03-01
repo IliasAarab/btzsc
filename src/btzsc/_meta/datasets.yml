@@ -1,0 +1,67 @@
+btzsc_info:
+  amazonpolarity:
+    task: sentiment
+    domain: e-commerce
+  imdb:
+    task: sentiment
+    domain: movies
+  appreviews:
+    task: sentiment
+    domain: apps
+  yelpreviews:
+    task: sentiment
+    domain: local-business
+  rottentomatoes:
+    task: sentiment
+    domain: movies
+  financialphrasebank:
+    task: sentiment
+    domain: finance
+  emotiondair:
+    task: emotion
+    domain: social-media
+  empathetic:
+    task: emotion
+    domain: dialogue
+  banking77:
+    task: intent
+    domain: banking
+  biasframes_intent:
+    task: intent
+    domain: social-media
+  massive:
+    task: intent
+    domain: assistant
+  agnews:
+    task: topic
+    domain: news
+  yahootopics:
+    task: topic
+    domain: qa-forum
+  trueteacher:
+    task: topic
+    domain: education
+  manifesto:
+    task: topic
+    domain: politics
+  capsotu:
+    task: topic
+    domain: politics
+  biasframes_offensive:
+    task: topic
+    domain: social-media
+  biasframes_sex:
+    task: topic
+    domain: social-media
+  wikitoxic_toxicaggregated:
+    task: topic
+    domain: wikipedia
+  wikitoxic_obscene:
+    task: topic
+    domain: wikipedia
+  wikitoxic_threat:
+    task: topic
+    domain: wikipedia
+  wikitoxic_insult:
+    task: topic
+    domain: wikipedia
