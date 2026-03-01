@@ -1,5 +1,5 @@
 <p align="center">
-	<img src="./btzsc_benchmark.png" align="center" width="30%" alt="BTZSC banner">
+	<img src="./docs/images/btzsc_benchmark.png" align="center" width="30%" alt="BTZSC banner">
 </p>
 <h1 align="center">BTZSC</h1>
 <p align="center">
