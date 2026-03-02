@@ -1,6 +1,6 @@
 [project]
 name = "btzsc"
-version = "0.1.1"
+version = "0.1.2"
 description = "BTZSC: A Benchmark for Zero-Shot Text Classification across Cross-Encoders, Embedding Models, Rerankers and LLMs"
 readme = "README.md"
 license = { text = "MIT" }

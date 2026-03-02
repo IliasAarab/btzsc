@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="./docs/images/btzsc_benchmark.png" align="center" width="40%" alt="BTZSC banner">
+  <img src="https://raw.githubusercontent.com/IliasAarab/btzsc/main/docs/images/btzsc_benchmark.png" align="center" width="40%" alt="BTZSC banner">
 </p>
 <h1 align="center">BTZSC</h1>
 <p align="center">
   <em>A unified benchmark for zero-shot text classification across embedding models, cross-encoders, rerankers, and LLMs.</em>
 </p>
 <p align="center">
-  <a href="https://github.com/IliasAarab/btzsc/releases"><img src="https://img.shields.io/github/v/release/IliasAarab/btzsc?style=default&color=0080ff" alt="release"></a>
+  <a href="https://github.com/IliasAarab/btzsc/tags"><img src="https://img.shields.io/github/v/tag/IliasAarab/btzsc?style=default&color=0080ff&label=version" alt="version"></a>
   <a href="https://pypi.org/project/btzsc/"><img src="https://img.shields.io/pypi/pyversions/btzsc?style=default&color=0080ff" alt="python-versions"></a>
   <a href="https://github.com/IliasAarab/btzsc/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/IliasAarab/btzsc/ci.yml?branch=main&style=default&label=ci&color=0080ff" alt="ci-status"></a>
   <a href="https://github.com/IliasAarab/btzsc/actions/workflows/publish.yml"><img src="https://img.shields.io/github/actions/workflow/status/IliasAarab/btzsc/publish.yml?style=default&label=publish&color=0080ff" alt="publish-status"></a>
