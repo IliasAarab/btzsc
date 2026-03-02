@@ -116,6 +116,21 @@ btzsc list-datasets
 btzsc list-model-types
 ```
 
+Export leaderboard-ready JSON:
+
+```bash
+btzsc evaluate \
+	--model intfloat/e5-base-v2 \
+	--type embedding \
+	--output-json results/embedding/e5-base-v2.json
+```
+
+Validate a result JSON locally:
+
+```bash
+btzsc validate-result results/embedding/e5-base-v2.json
+```
+
 ### Supported Model Types
 
 BTZSC currently supports these adapter families:

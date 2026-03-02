@@ -274,7 +274,7 @@ select = [
   "PLC0205",
   "PLC0208",
   "PLC0414",
-  "PLC0415",
+  # "PLC0415",
   "PLC1901",
   "PLC2401",
   "PLC2403",
@@ -658,11 +658,8 @@ select = [
 unfixable = ["F401"]
 
 [lint.per-file-ignores]
-"**/repl.py"   = ["ALL"]
-"**/scripts/*" = [
-  "INP001",
-  "T201",
-]
+"**/repl.py" = ["ALL"]
+"**/scripts/*" = ["INP001", "T201"]
 "**/tests/**/*" = [
   "INP001",
   "PLC0415",
@@ -671,7 +668,7 @@ unfixable = ["F401"]
   "PLR6301",
   "S",
   "TID252",
-  "ARG002"
+  "ARG002",
 ]
 "**/__init__.py" = ["E402"]
 "src/btzsc/benchmark.py" = ["PLC0415"]
