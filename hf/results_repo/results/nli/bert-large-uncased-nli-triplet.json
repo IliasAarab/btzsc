@@ -1,0 +1,187 @@
+{
+  "schema_version": "1.0",
+  "model": {
+    "name": "bert-large-uncased-nli-triplet",
+    "model_type": "nli",
+    "params": "335M",
+    "revision": "unknown",
+    "url": "https://huggingface.co/bert-large-uncased-nli-triplet"
+  },
+  "evaluation": {
+    "btzsc_version": "0.1.1",
+    "btzsc_commit": "8a0d52cbe423",
+    "timestamp": "2026-03-01T19:47:17.282165+00:00",
+    "device": "unknown",
+    "precision": "unknown",
+    "batch_size": 32,
+    "max_samples": null
+  },
+  "results": {
+    "overall": {
+      "macro_f1": 0.524601,
+      "accuracy": 0.553299,
+      "macro_precision": 0.580262,
+      "macro_recall": 0.580901
+    },
+    "by_task": {
+      "sentiment": {
+        "macro_f1": 0.776186,
+        "accuracy": 0.781098,
+        "macro_precision": 0.800591,
+        "macro_recall": 0.801062
+      },
+      "emotion": {
+        "macro_f1": 0.239191,
+        "accuracy": 0.252,
+        "macro_precision": 0.370929,
+        "macro_recall": 0.271308
+      },
+      "intent": {
+        "macro_f1": 0.345063,
+        "accuracy": 0.348333,
+        "macro_precision": 0.38974,
+        "macro_recall": 0.36855
+      },
+      "topic": {
+        "macro_f1": 0.48823,
+        "accuracy": 0.539727,
+        "macro_precision": 0.550103,
+        "macro_recall": 0.575017
+      }
+    },
+    "by_dataset": {
+      "amazonpolarity": {
+        "macro_f1": 0.8373348712921143,
+        "accuracy": 0.8399999737739563,
+        "macro_precision": 0.8558336496353149,
+        "macro_recall": 0.8372379541397095
+      },
+      "imdb": {
+        "macro_f1": 0.7798857092857361,
+        "accuracy": 0.7879999876022339,
+        "macro_precision": 0.824999213218689,
+        "macro_recall": 0.7835376262664795
+      },
+      "appreviews": {
+        "macro_f1": 0.8499616384506226,
+        "accuracy": 0.8500000238418579,
+        "macro_precision": 0.8501056432723999,
+        "macro_recall": 0.8499263525009155
+      },
+      "yelpreviews": {
+        "macro_f1": 0.8968430757522583,
+        "accuracy": 0.8970000147819519,
+        "macro_precision": 0.8973985910415649,
+        "macro_recall": 0.8965920805931091
+      },
+      "rottentomatoes": {
+        "macro_f1": 0.7154526710510254,
+        "accuracy": 0.7260788083076477,
+        "macro_precision": 0.7657798528671265,
+        "macro_recall": 0.7260788083076477
+      },
+      "financialphrasebank": {
+        "macro_f1": 0.5776402950286865,
+        "accuracy": 0.5855072736740112,
+        "macro_precision": 0.6094277501106262,
+        "macro_recall": 0.71299809217453
+      },
+      "emotiondair": {
+        "macro_f1": 0.2828684151172638,
+        "accuracy": 0.296999990940094,
+        "macro_precision": 0.39974313974380493,
+        "macro_recall": 0.3465455174446106
+      },
+      "empathetic": {
+        "macro_f1": 0.1955133080482483,
+        "accuracy": 0.2070000022649765,
+        "macro_precision": 0.34211501479148865,
+        "macro_recall": 0.19607101380825043
+      },
+      "banking77": {
+        "macro_f1": 0.062161438167095184,
+        "accuracy": 0.0689999982714653,
+        "macro_precision": 0.10687083750963211,
+        "macro_recall": 0.06681493669748306
+      },
+      "biasframes_intent": {
+        "macro_f1": 0.6038716435432434,
+        "accuracy": 0.6039999723434448,
+        "macro_precision": 0.6096311807632446,
+        "macro_recall": 0.6088849306106567
+      },
+      "massive": {
+        "macro_f1": 0.36915647983551025,
+        "accuracy": 0.3720000088214874,
+        "macro_precision": 0.4527166485786438,
+        "macro_recall": 0.4299509525299072
+      },
+      "agnews": {
+        "macro_f1": 0.7285709381103516,
+        "accuracy": 0.7319999933242798,
+        "macro_precision": 0.7486485242843628,
+        "macro_recall": 0.7356671690940857
+      },
+      "yahootopics": {
+        "macro_f1": 0.3332909643650055,
+        "accuracy": 0.4169999957084656,
+        "macro_precision": 0.4121311902999878,
+        "macro_recall": 0.37010493874549866
+      },
+      "trueteacher": {
+        "macro_f1": 0.36477410793304443,
+        "accuracy": 0.49000000953674316,
+        "macro_precision": 0.47578948736190796,
+        "macro_recall": 0.4953993558883667
+      },
+      "manifesto": {
+        "macro_f1": 0.018068579956889153,
+        "accuracy": 0.024000000208616257,
+        "macro_precision": 0.06057813763618469,
+        "macro_recall": 0.04148751124739647
+      },
+      "capsotu": {
+        "macro_f1": 0.13261830806732178,
+        "accuracy": 0.24300000071525574,
+        "macro_precision": 0.17876844108104706,
+        "macro_recall": 0.19008205831050873
+      },
+      "biasframes_offensive": {
+        "macro_f1": 0.6369782090187073,
+        "accuracy": 0.6690000295639038,
+        "macro_precision": 0.6752663850784302,
+        "macro_recall": 0.6407065391540527
+      },
+      "biasframes_sex": {
+        "macro_f1": 0.4285886883735657,
+        "accuracy": 0.5270000100135803,
+        "macro_precision": 0.5510167479515076,
+        "macro_recall": 0.732758641242981
+      },
+      "wikitoxic_toxicaggregated": {
+        "macro_f1": 0.7741836905479431,
+        "accuracy": 0.777999997138977,
+        "macro_precision": 0.7908857464790344,
+        "macro_recall": 0.7751439809799194
+      },
+      "wikitoxic_obscene": {
+        "macro_f1": 0.8325483202934265,
+        "accuracy": 0.8349999785423279,
+        "macro_precision": 0.8306154608726501,
+        "macro_recall": 0.8376864194869995
+      },
+      "wikitoxic_threat": {
+        "macro_f1": 0.39473915100097656,
+        "accuracy": 0.4950000047683716,
+        "macro_precision": 0.5400728583335876,
+        "macro_recall": 0.7358786463737488
+      },
+      "wikitoxic_insult": {
+        "macro_f1": 0.7261716723442078,
+        "accuracy": 0.7269999980926514,
+        "macro_precision": 0.7873606085777283,
+        "macro_recall": 0.7702758312225342
+      }
+    }
+  }
+}
