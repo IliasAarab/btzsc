@@ -12,3 +12,6 @@ wheels/
 # Dependency lockfile (library project)
 uv.lock
 .vscode/
+
+# Secrets
+.env
