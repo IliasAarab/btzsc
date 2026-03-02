@@ -19,6 +19,12 @@ def main() -> None:
 @click.option("--tasks", default="", help="Comma-separated task groups or dataset names")
 @click.option("--max-samples", type=int, default=None)
 @click.option("--output", type=click.Path(path_type=Path), default=None)
+@click.option(
+    "--output-json",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Write results to a JSON file in BTZSC leaderboard format.",
+)
 def evaluate(
     model_name: str,
     model_type: str | None,
@@ -26,6 +32,7 @@ def evaluate(
     tasks: str,
     max_samples: int | None,
     output: Path | None,
+    output_json: Path | None,
 ) -> None:
     """Run benchmark evaluation from the CLI.
 
@@ -36,6 +43,7 @@ def evaluate(
         tasks: Comma-separated task-group or dataset names.
         max_samples: Optional per-dataset sample limit.
         output: Optional CSV path for per-dataset results.
+        output_json: Optional JSON path for leaderboard submission output.
     """
     from btzsc.benchmark import BTZSCBenchmark
 
@@ -51,6 +59,10 @@ def evaluate(
     if output is not None:
         results.to_csv(output)
         click.echo(f"\nSaved per-dataset results to {output}")
+
+    if output_json is not None:
+        results.to_json(output_json)
+        click.echo(f"Saved leaderboard JSON to {output_json}")
 
 
 @main.command()
@@ -94,3 +106,19 @@ def list_datasets() -> None:
 def list_model_types() -> None:
     """Print supported model adapter types as JSON."""
     click.echo(json.dumps(["embedding", "nli", "reranker", "llm"], indent=2))
+
+
+@main.command("validate-result")
+@click.argument("json_path", type=click.Path(path_type=Path, exists=True, dir_okay=False))
+def validate_result(json_path: Path) -> None:
+    """Validate a leaderboard JSON file against BTZSC schema checks."""
+    from btzsc.leaderboard.validate import validate_result_file
+
+    errors = validate_result_file(json_path)
+    if errors:
+        click.echo(f"Validation failed ({len(errors)} errors):")
+        for err in errors:
+            click.echo(f"  - {err}")
+        raise SystemExit(1)
+
+    click.echo("Validation passed.")
