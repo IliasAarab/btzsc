@@ -57,6 +57,8 @@ class LLMModel(BaseModel):
         self.model.eval()
         if self.tokenizer.pad_token_id is None and self.tokenizer.eos_token_id is not None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
+        if getattr(self.model.config, "pad_token_id", None) is None:
+            self.model.config.pad_token_id = self.tokenizer.pad_token_id
 
     def _build_prompt(self, text: str, labels: list[str]) -> str:
         """Construct a multiple-choice classification prompt.
@@ -120,8 +122,17 @@ class LLMModel(BaseModel):
             for i in range(0, len(prompts), batch_size):
                 chunk = prompts[i : i + batch_size]
                 enc = self.tokenizer(chunk, padding=True, truncation=True, return_tensors="pt").to(self.device)
-                logits = self.model(**enc).logits[:, -1, :]
-                probs = logits.softmax(dim=-1)[:, letter_ids]
+                outputs = self.model(**enc)
+                logits = outputs.logits
+                attention_mask = enc.get("attention_mask")
+                if attention_mask is None:
+                    next_logits = logits[:, -1, :]
+                else:
+                    mask_long = attention_mask.to(dtype=torch.long)
+                    last_pos = (mask_long.size(1) - 1) - mask_long.flip(dims=[1]).argmax(dim=1)
+                    row_idx = torch.arange(logits.size(0), device=logits.device)
+                    next_logits = logits[row_idx, last_pos, :]
+                probs = next_logits.softmax(dim=-1)[:, letter_ids]
                 probs /= probs.sum(dim=-1, keepdim=True)
                 rows.append(probs.detach().float().cpu().numpy())
         return np.concatenate(rows, axis=0)
