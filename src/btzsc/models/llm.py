@@ -14,9 +14,34 @@ class LLMModel(BaseModel):
     """Zero-shot classifier based on causal language model next-token scoring."""
 
     model_type = "llm"
-    _SYMBOLS = list(string.ascii_uppercase) + list(string.ascii_lowercase)
+    _SYMBOLS = (
+        list(string.ascii_uppercase)
+        + list(string.ascii_lowercase)
+        + list("αβγδεζηθικλμνξοπρστυφχψω")
+        + list("ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ")
+    )
+    _DEFAULT_PROMPT = (
+        "You are a text classifier.\n"
+        "You will be given a text and several mutually exclusive options.\n"
+        "Each option is prefixed by a single letter (e.g. A, b, λ, ...).\n"
+        "Your task is to choose the single best option.\n\n"
+        "IMPORTANT:\n"
+        "- Answer with EXACTLY ONE LETTER used to prefix the options.\n"
+        "- Do NOT output any words, punctuation, or explanation.\n\n"
+        "TEXT:\n"
+        "{text}\n\n"
+        "OPTIONS:\n"
+        "{options}\n\n"
+        "Answer: The correct option is letter "
+    )
 
-    def __init__(self, model_name: str, *, device: str | None = None, torch_dtype: torch.dtype | None = None) -> None:
+    def __init__(
+        self,
+        model_name: str,
+        *,
+        device: str | None = None,
+        torch_dtype: torch.dtype | None = None,
+    ) -> None:
         """Initialize a causal-LM adapter.
 
         Args:
@@ -47,13 +72,7 @@ class LLMModel(BaseModel):
         for i, label in enumerate(labels):
             opts.append(f"{self._SYMBOLS[i]}) {label}")
         options = "\n".join(opts)
-        return (
-            "You are a text classifier.\n"
-            "You must choose exactly one option letter.\n\n"
-            f"TEXT:\n{text}\n\n"
-            f"OPTIONS:\n{options}\n\n"
-            "Answer:"
-        )
+        return self._DEFAULT_PROMPT.format(text=text, options=options)
 
     def _get_letter_ids(self, n_labels: int) -> torch.Tensor:
         """Resolve token IDs for option letters.
