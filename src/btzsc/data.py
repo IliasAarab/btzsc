@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import random
 from importlib import resources
 
 import numpy as np
@@ -9,6 +10,7 @@ import yaml
 from datasets import load_dataset
 
 REPO_ID = "btzsc/btzsc"
+SAMPLING_SEED = 0
 
 # ──────────────────────────────────────────────────────────────────────
 # Dataset metadata
@@ -192,6 +194,18 @@ def load_btzsc_dataset(
 
     if max_samples is not None:
         n_samples_total = min(n_samples_total, max_samples)
+        if n_samples_total <= 0:
+            sample_indices = []
+        elif n_samples_total == 1:
+            sample_indices = [0]
+        else:
+            rng = random.Random(SAMPLING_SEED)
+            remaining = rng.sample(range(2, n_rows // n_classes), k=n_samples_total - 2)
+            # Ensure first two grouped samples are present so class order inference
+            # remains anchored to the dataset's canonical beginning.
+            sample_indices = [0, 1, *remaining]
+    else:
+        sample_indices = list(range(n_samples_total))
 
     # Extract columns
     all_texts: list[str] = ds["text"]  # type: ignore[assignment]
@@ -203,7 +217,7 @@ def load_btzsc_dataset(
     references: list[int] = []
     label_names: list[str] | None = None
 
-    for i in range(n_samples_total):
+    for i in sample_indices:
         offset = i * n_classes
         texts.append(all_texts[offset])
 
