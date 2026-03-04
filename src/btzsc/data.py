@@ -7,7 +7,7 @@ from importlib import resources
 
 import numpy as np
 import yaml
-from datasets import load_dataset
+from datasets import concatenate_datasets, load_dataset
 
 REPO_ID = "btzsc/btzsc"
 SAMPLING_SEED = 0
@@ -184,6 +184,11 @@ def load_btzsc_dataset(
         raise ValueError(msg)
 
     ds = load_dataset(REPO_ID, name=name, split="test", cache_dir=cache_dir)
+
+    if name == "yahootopics":
+        first_20 = ds.select(range(min(20, len(ds))))
+        ds = ds.filter(lambda sample: sample["label_text"] != "Business & Finance")
+        ds = concatenate_datasets([first_20, ds])
 
     # Determine number of classes from the binary label pattern
     labels_col: list[int] = ds["labels"]  # type: ignore[assignment]
