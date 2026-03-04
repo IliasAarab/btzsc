@@ -23,7 +23,7 @@ class LLMModel(BaseModel):
     _DEFAULT_PROMPT = (
         "You are a text classifier.\n"
         "You will be given a text and several mutually exclusive options.\n"
-        "Each option is prefixed by a single letter (e.g. A, b, λ, ...).\n"
+        "Each option is prefixed by a single letter (e.g. A, b, γ, ...).\n"
         "Your task is to choose the single best option.\n\n"
         "IMPORTANT:\n"
         "- Answer with EXACTLY ONE LETTER used to prefix the options.\n"
@@ -50,7 +50,8 @@ class LLMModel(BaseModel):
             torch_dtype: Optional model loading dtype.
         """
         self.model_name = model_name
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
+        padding_side = "left" if any(mdl in model_name.lower() for mdl in ["mistral", "qwen3"]) else "right"
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True, padding_side=padding_side)
         self.model = cast(Any, AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch_dtype))
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
@@ -100,22 +101,29 @@ class LLMModel(BaseModel):
     def predict_scores(self, texts: list[str], labels: list[str], batch_size: int = 8) -> np.ndarray:
         """Compute label probabilities from next-token distributions.
 
+        Internally, labels are sorted alphabetically before prompt construction
+        so that option-letter assignment is deterministic regardless of the
+        caller's label ordering. The returned columns are mapped back to the caller's original label order.
+
         Args:
             texts: Input texts.
             labels: Candidate label descriptions.
             batch_size: Prompt inference batch size.
 
         Returns:
-            Probability matrix of shape `(len(texts), len(labels))`.
+            Probability matrix of shape ``(len(texts), len(labels))``,
+            columns in the same order as the input *labels* list.
 
         Raises:
             ValueError: If number of labels exceeds available option symbols.
         """
-        if len(labels) > len(self._SYMBOLS):
-            msg = f"Too many labels ({len(labels)}), max supported is {len(self._SYMBOLS)}"
+        # Canonical sorted order for prompt construction (matches reference impl)
+        sorted_labels = sorted(set(labels))
+        if len(sorted_labels) > len(self._SYMBOLS):
+            msg = f"Too many labels ({len(sorted_labels)}), max supported is {len(self._SYMBOLS)}"
             raise ValueError(msg)
-        letter_ids = self._get_letter_ids(len(labels))
-        prompts = [self._build_prompt(text, labels) for text in texts]
+        letter_ids = self._get_letter_ids(len(sorted_labels))
+        prompts = [self._build_prompt(text, sorted_labels) for text in texts]
 
         rows: list[np.ndarray] = []
         with torch.no_grad():
@@ -135,7 +143,14 @@ class LLMModel(BaseModel):
                 probs = next_logits.softmax(dim=-1)[:, letter_ids]
                 probs /= probs.sum(dim=-1, keepdim=True)
                 rows.append(probs.detach().float().cpu().numpy())
-        return np.concatenate(rows, axis=0)
+        scored = np.concatenate(rows, axis=0)
+
+        # Map columns from sorted order back to caller's label order
+        if sorted_labels != labels:
+            sorted_index = {lab: i for i, lab in enumerate(sorted_labels)}
+            col_order = [sorted_index[lab] for lab in labels]
+            scored = scored[:, col_order]
+        return scored
 
     def predict(self, texts: list[str], labels: list[str], batch_size: int = 8) -> np.ndarray:
         """Predict best label index for each text.
