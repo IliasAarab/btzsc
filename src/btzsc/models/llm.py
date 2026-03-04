@@ -23,7 +23,7 @@ class LLMModel(BaseModel):
     _DEFAULT_PROMPT = (
         "You are a text classifier.\n"
         "You will be given a text and several mutually exclusive options.\n"
-        "Each option is prefixed by a single letter (e.g. A, b, γ, ...).\n"
+        "Each option is prefixed by a single letter (e.g. A, b, γ, ...).\n"  # noqa: RUF001
         "Your task is to choose the single best option.\n\n"
         "IMPORTANT:\n"
         "- Answer with EXACTLY ONE LETTER used to prefix the options.\n"
